@@ -2,10 +2,10 @@
 
 [中文文档](./README.zh.md)
 
-
 CLI utility for backing up and restoring globally installed npm, Yarn, and pnpm packages when switching Node.js versions.
 
 ## Features
+
 - Save the current global package list with metadata about Node/npm versions and platform.
 - Restore packages in parallel using the latest versions or the exact saved versions.
 - Selective restore mode with an interactive prompt for skipping packages.
@@ -42,6 +42,7 @@ npm-migrate restore my-global-packages --exact-version
 ```
 
 ## Commands
+
 - `save [name]` – capture the current global packages into a profile.
 - `restore [name]` – restore packages from a saved profile.
 - `select [name]` – interactively restore selected packages.
@@ -51,6 +52,7 @@ npm-migrate restore my-global-packages --exact-version
 - `help` – print CLI usage.
 
 ### Options
+
 - `--pm <manager>` – choose npm, yarn, or pnpm explicitly.
 - `--concurrency <n>` – number of concurrent installs (default 3).
 - `--exact-version` – install the exact versions saved in the profile.
@@ -63,6 +65,5 @@ yarn test
 
 ## License
 
-MIT © 2023-present YangsonHung
-
+MIT © 2025-present YangsonHung
 
