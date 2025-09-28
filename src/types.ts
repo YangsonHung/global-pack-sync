@@ -37,10 +37,11 @@ export interface LockData {
   timestamp: number;
 }
 
-export interface NpmMigrateOptions {
+export interface GlobalPackSyncOptions {
   configDir?: string;
 }
 
 export type ColorKey = 'reset' | 'green' | 'yellow' | 'red' | 'cyan' | 'blue' | 'gray';
 
 export type ColorPalette = Record<ColorKey, string>;
+

@@ -3,7 +3,7 @@ import os from 'os';
 import path from 'path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { NpmMigrate } from '../src/index';
+import { GlobalPackSync } from '../src/index';
 
 const createProfile = (packages: Record<string, string>) => ({
   nodeVersion: 'v18.17.0',
@@ -16,13 +16,13 @@ const createProfile = (packages: Record<string, string>) => ({
   arch: 'x64',
 });
 
-describe('NpmMigrate', () => {
+describe('GlobalPackSync', () => {
   let tempRoot: string;
   let configDir: string;
 
   beforeEach(() => {
-    tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'npm-migrate-test-'));
-    configDir = path.join(tempRoot, '.npm-migrate');
+    tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'global-pack-sync-test-'));
+    configDir = path.join(tempRoot, '.global-pack-sync');
   });
 
   afterEach(() => {
@@ -33,7 +33,7 @@ describe('NpmMigrate', () => {
   });
 
   it('saves global package snapshot to the configured directory', async () => {
-    const migrator = new NpmMigrate({ configDir });
+    const migrator = new GlobalPackSync({ configDir });
 
     vi.spyOn(migrator, 'detectPackageManager').mockReturnValue('npm');
     vi.spyOn(migrator, 'getGlobalPackages').mockResolvedValue({
@@ -60,7 +60,7 @@ describe('NpmMigrate', () => {
   });
 
   it('restores packages using saved profile metadata', async () => {
-    const migrator = new NpmMigrate({ configDir });
+    const migrator = new GlobalPackSync({ configDir });
     const logSpy = vi.spyOn(console, 'log').mockImplementation(() => undefined);
 
     fs.mkdirSync(configDir, { recursive: true });
@@ -84,7 +84,7 @@ describe('NpmMigrate', () => {
   });
 
   it('prints diff between two saved profiles', () => {
-    const migrator = new NpmMigrate({ configDir });
+    const migrator = new GlobalPackSync({ configDir });
     fs.mkdirSync(configDir, { recursive: true });
     const configPath = path.join(configDir, 'packages.json');
 
@@ -109,3 +109,4 @@ describe('NpmMigrate', () => {
     errorSpy.mockRestore();
   });
 });
+

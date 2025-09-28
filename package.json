@@ -1,9 +1,9 @@
 {
-  "name": "npm-migrate",
+  "name": "global-pack-sync",
   "version": "0.0.1",
-  "description": "CLI utility for backing up and restoring global npm/yarn/pnpm packages across Node.js versions.",
+  "description": "CLI utility for syncing global npm/yarn/pnpm packages across Node.js versions.",
   "bin": {
-    "npm-migrate": "./dist/cli.js"
+    "global-pack-sync": "./dist/cli.js"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

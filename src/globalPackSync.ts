@@ -37,21 +37,21 @@ import type {
   Config,
   InstallResults,
   LockData,
-  NpmMigrateOptions,
+  GlobalPackSyncOptions,
   PackageManager,
   PackageMap,
   Profile,
   VersionInfo,
 } from './types';
 
-class NpmMigrate {
+class GlobalPackSync {
   private readonly configDir: string;
   private readonly configFile: string;
   private readonly lockFile: string;
   private readonly colors: ColorPalette;
   private readonly skipPackages: Set<string>;
 
-  constructor(options: NpmMigrateOptions = {}) {
+  constructor(options: GlobalPackSyncOptions = {}) {
     const configDir = options.configDir ?? path.join(os.homedir(), CONFIG_DIR_NAME);
     this.configDir = configDir;
     this.configFile = path.join(configDir, CONFIG_FILE_NAME);
@@ -73,7 +73,7 @@ class NpmMigrate {
     if (existingLock) {
       if (isLockActive(existingLock)) {
         console.error(
-          `${this.colors.red}错误: 另一个 npm-migrate 进程正在运行 (PID: ${existingLock.pid})${this.colors.reset}`,
+          `${this.colors.red}错误: 另一个 global-pack-sync 进程正在运行 (PID: ${existingLock.pid})${this.colors.reset}`,
         );
         process.exit(1);
       }
@@ -316,7 +316,7 @@ class NpmMigrate {
 
     if (!fs.existsSync(this.configFile)) {
       console.error(`${this.colors.red}错误: 配置文件不存在${this.colors.reset}`);
-      console.log(`请先运行 ${this.colors.yellow}npm-migrate save${this.colors.reset} 保存当前环境`);
+      console.log(`请先运行 ${this.colors.yellow}global-pack-sync save${this.colors.reset} 保存当前环境`);
       this.clearLock();
       return;
     }
@@ -503,10 +503,10 @@ class NpmMigrate {
 
   public showHelp(): void {
     console.log(`
-${this.colors.cyan}npm-migrate - Node.js 全局 npm 包迁移工具 (增强版)${this.colors.reset}
+${this.colors.cyan}global-pack-sync - Node.js 全局 npm 包迁移工具 (增强版)${this.colors.reset}
 
 ${this.colors.yellow}使用方法:${this.colors.reset}
-  npm-migrate <command> [options]
+  global-pack-sync <command> [options]
 
 ${this.colors.yellow}命令:${this.colors.reset}
   save [name]           保存当前环境的全局包列表
@@ -524,23 +524,23 @@ ${this.colors.yellow}选项:${this.colors.reset}
 
 ${this.colors.yellow}示例:${this.colors.reset}
   # 保存当前环境
-  npm-migrate save
-  npm-migrate save my-packages
+  global-pack-sync save
+  global-pack-sync save my-packages
 
   # 切换 Node 版本后恢复包 (使用最新版本)
   nvm use 18.0.0
-  npm-migrate restore
-  npm-migrate restore my-packages --pm yarn
+  global-pack-sync restore
+  global-pack-sync restore my-packages --pm yarn
 
   # 使用保存时的确切版本恢复
-  npm-migrate restore --exact-version
+  global-pack-sync restore --exact-version
 
   # 选择性恢复包
-  npm-migrate select my-packages
+  global-pack-sync select my-packages
 
   # 查看和比较配置
-  npm-migrate list
-  npm-migrate diff old-config new-config
+  global-pack-sync list
+  global-pack-sync diff old-config new-config
 
 ${this.colors.yellow}配置文件位置:${this.colors.reset}
   ${this.configFile}
@@ -553,7 +553,7 @@ ${this.colors.yellow}特性:${this.colors.reset}
   - 配置差异对比
   - 失败重试脚本
   - 进程锁防止冲突
-  - 自动过滤系统包 (npm, corepack, npm-migrate 等)
+  - 自动过滤系统包 (npm, corepack, global-pack-sync 等)
     `);
   }
 
@@ -640,6 +640,8 @@ ${this.colors.yellow}特性:${this.colors.reset}
   }
 }
 
-export { NpmMigrate };
-export default NpmMigrate;
+export { GlobalPackSync };
+export default GlobalPackSync;
+
+
 

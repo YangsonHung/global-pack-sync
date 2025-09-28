@@ -1,9 +1,9 @@
 ﻿#!/usr/bin/env node
 
-import NpmMigrate from './index';
+import GlobalPackSync from './index';
 
 async function main(): Promise<void> {
-  const migrator = new NpmMigrate();
+  const migrator = new GlobalPackSync();
   await migrator.run();
 }
 
@@ -12,3 +12,4 @@ main().catch((error) => {
   console.error('Unhandled error:', message);
   process.exit(1);
 });
+

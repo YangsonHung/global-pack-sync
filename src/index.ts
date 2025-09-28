@@ -1,8 +1,8 @@
-﻿import NpmMigrate from './npmMigrate';
+﻿import GlobalPackSync from './globalPackSync';
 
-export { NpmMigrate };
+export { GlobalPackSync };
 export type {
-  NpmMigrateOptions,
+  GlobalPackSyncOptions,
   PackageManager,
   PackageMap,
   InstallResults,
@@ -12,4 +12,4 @@ export type {
   VersionInfo,
 } from './types';
 
-export default NpmMigrate;
+export default GlobalPackSync;

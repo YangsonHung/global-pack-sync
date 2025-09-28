@@ -1,8 +1,8 @@
-﻿# npm-migrate
+﻿# global-pack-sync
 
 🚀 Node.js 全局 npm 包迁移工具 - 轻松在不同 Node.js 版本间迁移全局安装的包
 
-[![npm version](https://badge.fury.io/js/npm-migrate.svg)](https://www.npmjs.com/package/npm-migrate)
+[![npm version](https://badge.fury.io/js/global-pack-sync.svg)](https://www.npmjs.com/package/global-pack-sync)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## 问题背景
@@ -14,7 +14,7 @@
 - ⏰ 手动记住和重新安装几十个全局包既费时又容易遗漏
 - 🔧 不同包管理器（npm/yarn/pnpm）的包无法便捷迁移
 
-**npm-migrate** 就是为了解决这个问题而生！
+**global-pack-sync** 就是为了解决这个问题而生！
 
 ## 特性
 
@@ -48,13 +48,13 @@
 
 ```bash
 # 全局安装
-npm install -g npm-migrate
+npm install -g global-pack-sync
 
 # 或使用 yarn
-yarn global add npm-migrate
+yarn global add global-pack-sync
 
 # 或使用 pnpm
-pnpm add -g npm-migrate
+pnpm add -g global-pack-sync
 ```
 
 ## 快速开始
@@ -63,13 +63,13 @@ pnpm add -g npm-migrate
 
 ```bash
 # 1. 在当前 Node.js 版本保存全局包配置
-npm-migrate save
+global-pack-sync save
 
 # 2. 切换到新的 Node.js 版本
 nvm use 18.0.0  # 或 n 18.0.0
 
 # 3. 恢复全局包到新环境（默认安装最新版本）
-npm-migrate restore
+global-pack-sync restore
 ```
 
 就是这么简单！🎉
@@ -80,10 +80,10 @@ npm-migrate restore
 
 ```bash
 # 保存当前环境的全局包列表
-npm-migrate save
+global-pack-sync save
 
 # 保存到指定配置名称
-npm-migrate save my-project-packages
+global-pack-sync save my-project-packages
 
 # 保存时会显示详细信息
 ✓ 已保存配置文件 "node-v18.17.0-1693123456789"
@@ -91,23 +91,23 @@ npm-migrate save my-project-packages
   npm 版本: 9.6.7
   包管理器: npm
   包数量: 15
-  保存位置: ~/.npm-migrate/packages.json
+  保存位置: ~/.global-pack-sync/packages.json
 ```
 
 ### 📤 恢复配置
 
 ```bash
 # 恢复最新保存的配置（使用最新版本）
-npm-migrate restore
+global-pack-sync restore
 
 # 恢复指定配置
-npm-migrate restore my-project-packages
+global-pack-sync restore my-project-packages
 
 # 使用保存时的确切版本
-npm-migrate restore --exact-version
+global-pack-sync restore --exact-version
 
 # 指定包管理器和并发数
-npm-migrate restore --pm yarn --concurrency 5
+global-pack-sync restore --pm yarn --concurrency 5
 ```
 
 ### 🎯 选择性恢复
@@ -115,7 +115,7 @@ npm-migrate restore --pm yarn --concurrency 5
 有时您可能不想恢复所有包，可以使用交互式选择：
 
 ```bash
-npm-migrate select
+global-pack-sync select
 
 # 会显示如下界面：
 选择要恢复的包 (配置: node-v18.17.0-1693123456789):
@@ -137,10 +137,10 @@ npm-migrate select
 
 ```bash
 # 列出所有保存的配置
-npm-migrate list
+global-pack-sync list
 
 # 比较两个配置的差异
-npm-migrate diff node-v16.20.0 node-v18.17.0
+global-pack-sync diff node-v16.20.0 node-v18.17.0
 
 # 差异对比输出示例：
 配置差异对比: node-v16.20.0 vs node-v18.17.0
@@ -156,7 +156,7 @@ npm-migrate diff node-v16.20.0 node-v18.17.0
 
 ```bash
 # 删除指定配置
-npm-migrate delete old-config
+global-pack-sync delete old-config
 ```
 
 ## 参数选项
@@ -175,10 +175,10 @@ npm-migrate delete old-config
 
 ```bash
 # 保存团队标准配置
-npm-migrate save team-standard
+global-pack-sync save team-standard
 
 # 团队成员切换 Node.js 版本后
-npm-migrate restore team-standard
+global-pack-sync restore team-standard
 ```
 
 ### 🚀 CI/CD 集成
@@ -193,13 +193,13 @@ steps:
 
   - name: Restore global packages
     run: |
-      npm install -g npm-migrate
-      npm-migrate restore ci-packages
+      npm install -g global-pack-sync
+      global-pack-sync restore ci-packages
 ```
 
 ### 📝 配置文件管理
 
-配置文件默认保存在 `~/.npm-migrate/packages.json`：
+配置文件默认保存在 `~/.global-pack-sync/packages.json`：
 
 ```json
 {
@@ -231,11 +231,11 @@ A: 工具会自动过滤以下包，避免冲突：
 - `npm`、`npx` - npm 核心工具
 - `corepack` - Node.js 内置包管理器
 - `node-gyp` - 通常会自动安装
-- `npm-migrate` - 工具本身
+- `global-pack-sync` - 工具本身
 
 ### Q: 安装失败的包怎么处理？
 
-A: 工具会自动生成重试脚本 `~/.npm-migrate/retry-failed.sh`，您可以手动执行或修改后执行。
+A: 工具会自动生成重试脚本 `~/.global-pack-sync/retry-failed.sh`，您可以手动执行或修改后执行。
 
 ### Q: 支持私有 npm 源吗？
 
@@ -251,7 +251,7 @@ A: 大部分包可以，但一些依赖原生模块的包可能需要重新编�
 
 ```bash
 # macOS/Linux
-sudo npm-migrate restore
+sudo global-pack-sync restore
 
 # 或者修复 npm 权限
 npm config set prefix ~/.npm-global
@@ -265,17 +265,17 @@ echo 'export PATH=~/.npm-global/bin:$PATH' >> ~/.profile
 npm config set registry https://registry.npmmirror.com
 
 # 或临时使用
-npm-migrate restore --pm npm
+global-pack-sync restore --pm npm
 ```
 
 ### 清理和重置
 
 ```bash
 # 清理配置文件
-rm -rf ~/.npm-migrate
+rm -rf ~/.global-pack-sync
 
 # 重新开始
-npm-migrate save
+global-pack-sync save
 ```
 
 ## 贡献指南
@@ -286,8 +286,8 @@ npm-migrate save
 
 ```bash
 # 克隆仓库
-git clone https://github.com/your-username/npm-migrate.git
-cd npm-migrate
+git clone https://github.com/your-username/global-pack-sync.git
+cd global-pack-sync
 
 # 安装依赖
 npm install
@@ -322,14 +322,16 @@ npm test
 
 ## 链接
 
-- 🏠 [项目主页](https://github.com/your-username/npm-migrate)
-- 🐛 [问题反馈](https://github.com/your-username/npm-migrate/issues)
-- 📖 [Wiki 文档](https://github.com/your-username/npm-migrate/wiki)
-- 💬 [讨论区](https://github.com/your-username/npm-migrate/discussions)
+- 🏠 [项目主页](https://github.com/your-username/global-pack-sync)
+- 🐛 [问题反馈](https://github.com/your-username/global-pack-sync/issues)
+- 📖 [Wiki 文档](https://github.com/your-username/global-pack-sync/wiki)
+- 💬 [讨论区](https://github.com/your-username/global-pack-sync/discussions)
 
 ---
 
 如果这个工具帮助到了您，请给我们一个 ⭐ Star！
 
 **快乐编码！** 🎉
+
+
 

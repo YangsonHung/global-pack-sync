@@ -1,4 +1,4 @@
-﻿# npm-migrate
+﻿# global-pack-sync
 
 [中文文档](./README.zh.md)
 
@@ -10,35 +10,35 @@ CLI utility for backing up and restoring globally installed npm, Yarn, and pnpm 
 - Restore packages in parallel using the latest versions or the exact saved versions.
 - Selective restore mode with an interactive prompt for skipping packages.
 - Compare (diff) two saved profiles and clean up profiles you no longer need.
-- Automatically skips core tooling packages (npm, corepack, npm-migrate, etc.) and generates retry scripts for failures.
+- Automatically skips core tooling packages (npm, corepack, global-pack-sync, etc.) and generates retry scripts for failures.
 
 ## Installation
 
 ```bash
 # Install globally with npm
-npm install -g npm-migrate
+npm install -g global-pack-sync
 
 # or with Yarn
-yarn global add npm-migrate
+yarn global add global-pack-sync
 
 # or with pnpm
-pnpm add -g npm-migrate
+pnpm add -g global-pack-sync
 ```
 
 ## Quick Start
 
 ```bash
 # Save the current environment
-npm-migrate save my-global-packages
+global-pack-sync save my-global-packages
 
 # Switch Node.js versions
 nvm use 18
 
 # Restore packages (defaults to latest versions)
-npm-migrate restore my-global-packages
+global-pack-sync restore my-global-packages
 
 # Restore using exact saved versions
-npm-migrate restore my-global-packages --exact-version
+global-pack-sync restore my-global-packages --exact-version
 ```
 
 ## Commands
@@ -66,4 +66,3 @@ yarn test
 ## License
 
 MIT © 2025-present YangsonHung
-
