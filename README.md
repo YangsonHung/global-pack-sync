@@ -4,7 +4,7 @@
 
 🚀 Global npm package migration tool – effortlessly migrate the global packages you rely on when switching Node.js versions.
 
-[![npm version](https://badge.fury.io/js/global-pack-sync.svg)](https://www.npmjs.com/package/global-pack-sync)
+[![npm version](https://img.shields.io/npm/v/global-pack-sync.svg?logo=npm&cacheSeconds=600)](https://www.npmjs.com/package/global-pack-sync)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Background
@@ -279,4 +279,5 @@ See [CHANGELOG.md](./CHANGELOG.md) for the full history.
 If this tool helps you, please leave us a ⭐ star!
 
 **Happy coding!** 🎉
+
 

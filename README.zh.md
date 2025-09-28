@@ -2,7 +2,7 @@
 
 🚀 Node.js 全局 npm 包迁移工具 - 轻松在不同 Node.js 版本间迁移全局安装的包
 
-[![npm version](https://badge.fury.io/js/global-pack-sync.svg)](https://www.npmjs.com/package/global-pack-sync)
+[![npm version](https://img.shields.io/npm/v/global-pack-sync.svg?logo=npm&cacheSeconds=600)](https://www.npmjs.com/package/global-pack-sync)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## 问题背景
@@ -277,3 +277,4 @@ yarn test
 如果这个工具帮助到了您，请给我们一个 ⭐ Star！
 
 **快乐编码！** 🎉
+
