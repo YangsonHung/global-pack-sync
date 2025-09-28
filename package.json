@@ -15,7 +15,7 @@
                     "prepare":  "npm run build",
                     "test":  "vitest run",
                     "test:watch":  "vitest",
-                    "release":  "yarn build \u0026\u0026 npm publish"
+                    "release":  "yarn build \u0026\u0026 npm publish --access public --registry https://registry.npmjs.org/"
                 },
     "keywords":  [
 
