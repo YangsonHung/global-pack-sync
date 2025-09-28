@@ -44,4 +44,3 @@ export interface GlobalPackSyncOptions {
 export type ColorKey = 'reset' | 'green' | 'yellow' | 'red' | 'cyan' | 'blue' | 'gray';
 
 export type ColorPalette = Record<ColorKey, string>;
-

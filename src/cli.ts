@@ -12,4 +12,3 @@ main().catch((error) => {
   console.error('Unhandled error:', message);
   process.exit(1);
 });
-

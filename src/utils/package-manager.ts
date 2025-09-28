@@ -23,7 +23,10 @@ export function detectPackageManager(): PackageManager {
   return 'npm';
 }
 
-export function listGlobalPackages(packageManager: PackageManager, skipPackages: Set<string>): PackageMap {
+export function listGlobalPackages(
+  packageManager: PackageManager,
+  skipPackages: Set<string>,
+): PackageMap {
   let command: string;
   switch (packageManager) {
     case 'yarn':
@@ -65,7 +68,10 @@ export function listGlobalPackages(packageManager: PackageManager, skipPackages:
   return packages;
 }
 
-export async function fetchLatestVersion(packageName: string, packageManager: PackageManager): Promise<string> {
+export async function fetchLatestVersion(
+  packageName: string,
+  packageManager: PackageManager,
+): Promise<string> {
   let command: string;
   switch (packageManager) {
     case 'yarn':

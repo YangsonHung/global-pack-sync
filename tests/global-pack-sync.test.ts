@@ -69,8 +69,12 @@ describe('GlobalPackSync', () => {
     const profile = createProfile({ nodemon: '3.0.1' });
     fs.writeFileSync(configPath, JSON.stringify({ [profileName]: profile }, null, 2));
 
-    vi.spyOn(migrator as unknown as { getCurrentVersions: () => { nodeVersion: string; npmVersion: string } }, 'getCurrentVersions')
-      .mockReturnValue({ nodeVersion: 'v20.0.0', npmVersion: '10.0.0' });
+    vi.spyOn(
+      migrator as unknown as {
+        getCurrentVersions: () => { nodeVersion: string; npmVersion: string };
+      },
+      'getCurrentVersions',
+    ).mockReturnValue({ nodeVersion: 'v20.0.0', npmVersion: '10.0.0' });
 
     const installSpy = vi
       .spyOn(migrator, 'installPackagesConcurrently')
@@ -109,4 +113,3 @@ describe('GlobalPackSync', () => {
     errorSpy.mockRestore();
   });
 });
-

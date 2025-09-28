@@ -10,7 +10,13 @@ export const DEFAULT_COLORS: ColorPalette = {
   gray: '\u001b[90m',
 };
 
-export const DEFAULT_SKIP_PACKAGES = ['npm', 'npx', 'node-gyp', 'corepack', 'global-pack-sync'] as const;
+export const DEFAULT_SKIP_PACKAGES = [
+  'npm',
+  'npx',
+  'node-gyp',
+  'corepack',
+  'global-pack-sync',
+] as const;
 
 export const LOCK_STALE_MS = 5 * 60 * 1000;
 
@@ -19,4 +25,3 @@ export const CONFIG_DIR_NAME = '\.global-pack-sync';
 export const CONFIG_FILE_NAME = 'packages.json';
 
 export const LOCK_FILE_NAME = '.lock';
-

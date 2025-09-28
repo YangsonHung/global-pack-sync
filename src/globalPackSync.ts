@@ -18,12 +18,7 @@ import {
   removeFileIfExists,
   writeJsonFile,
 } from './utils/file-system';
-import {
-  clearLockFile,
-  isLockActive,
-  readLockFile,
-  writeLockFile,
-} from './utils/lock';
+import { clearLockFile, isLockActive, readLockFile, writeLockFile } from './utils/lock';
 import {
   detectPackageManager,
   fetchLatestVersion,
@@ -172,12 +167,17 @@ class GlobalPackSync {
     }
   }
 
-  private async getLatestVersion(packageName: string, packageManager: PackageManager): Promise<string | null> {
+  private async getLatestVersion(
+    packageName: string,
+    packageManager: PackageManager,
+  ): Promise<string | null> {
     try {
       const latest = await fetchLatestVersion(packageName, packageManager);
       return latest || null;
     } catch {
-      console.warn(`${this.colors.yellow}⚠ 无法获取 ${packageName} 的最新版本，使用保存的版本${this.colors.reset}`);
+      console.warn(
+        `${this.colors.yellow}⚠ 无法获取 ${packageName} 的最新版本，使用保存的版本${this.colors.reset}`,
+      );
       return null;
     }
   }
@@ -198,7 +198,10 @@ class GlobalPackSync {
     });
   }
 
-  private async installSelectedPackages(packages: PackageMap, options: CommonOptions = {}): Promise<void> {
+  private async installSelectedPackages(
+    packages: PackageMap,
+    options: CommonOptions = {},
+  ): Promise<void> {
     const packageManager = options.packageManager
       ? this.resolvePackageManager(options.packageManager)
       : 'npm';
@@ -223,7 +226,10 @@ class GlobalPackSync {
     }
   }
 
-  public async selectiveRestore(profileName: string | null = null, options: CommonOptions = {}): Promise<void> {
+  public async selectiveRestore(
+    profileName: string | null = null,
+    options: CommonOptions = {},
+  ): Promise<void> {
     this.checkLock();
 
     if (!fs.existsSync(this.configFile)) {
@@ -241,7 +247,9 @@ class GlobalPackSync {
       if (resolvedName) {
         profile = config[resolvedName];
         if (!profile) {
-          console.error(`${this.colors.red}错误: 配置 '${resolvedName}' 不存在${this.colors.reset}`);
+          console.error(
+            `${this.colors.red}错误: 配置 '${resolvedName}' 不存在${this.colors.reset}`,
+          );
           this.listProfiles();
           return;
         }
@@ -251,7 +259,9 @@ class GlobalPackSync {
           console.error(`${this.colors.red}错误: 没有保存的配置${this.colors.reset}`);
           return;
         }
-        profiles.sort((a, b) => new Date(b[1].savedAt).getTime() - new Date(a[1].savedAt).getTime());
+        profiles.sort(
+          (a, b) => new Date(b[1].savedAt).getTime() - new Date(a[1].savedAt).getTime(),
+        );
         resolvedName = profiles[0][0];
         profile = profiles[0][1];
       }
@@ -267,13 +277,17 @@ class GlobalPackSync {
         return;
       }
 
-      console.log(`${this.colors.cyan}选择要恢复的包 (配置: ${resolvedName}):${this.colors.reset}\n`);
+      console.log(
+        `${this.colors.cyan}选择要恢复的包 (配置: ${resolvedName}):${this.colors.reset}\n`,
+      );
       console.log(`${this.colors.yellow}包列表:${this.colors.reset}`);
       entries.forEach(([name, version], index) => {
         console.log(`  ${index + 1}. ${name}@${version}`);
       });
 
-      console.log(`\n${this.colors.cyan}输入要跳过的包序号 (用空格分隔，直接回车安装全部):${this.colors.reset}`);
+      console.log(
+        `\n${this.colors.cyan}输入要跳过的包序号 (用空格分隔，直接回车安装全部):${this.colors.reset}`,
+      );
 
       const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
 
@@ -299,7 +313,9 @@ class GlobalPackSync {
         }
       });
 
-      console.log(`\n${this.colors.green}将安装 ${Object.keys(selected).length} 个包${this.colors.reset}`);
+      console.log(
+        `\n${this.colors.green}将安装 ${Object.keys(selected).length} 个包${this.colors.reset}`,
+      );
 
       if (Object.keys(selected).length > 0) {
         await this.installSelectedPackages(selected, options);
@@ -311,12 +327,17 @@ class GlobalPackSync {
     }
   }
 
-  public async restore(profileName: string | null = null, options: CommonOptions = {}): Promise<void> {
+  public async restore(
+    profileName: string | null = null,
+    options: CommonOptions = {},
+  ): Promise<void> {
     this.checkLock();
 
     if (!fs.existsSync(this.configFile)) {
       console.error(`${this.colors.red}错误: 配置文件不存在${this.colors.reset}`);
-      console.log(`请先运行 ${this.colors.yellow}global-pack-sync save${this.colors.reset} 保存当前环境`);
+      console.log(
+        `请先运行 ${this.colors.yellow}global-pack-sync save${this.colors.reset} 保存当前环境`,
+      );
       this.clearLock();
       return;
     }
@@ -330,7 +351,9 @@ class GlobalPackSync {
       if (resolvedName) {
         profile = config[resolvedName];
         if (!profile) {
-          console.error(`${this.colors.red}错误: 配置 '${resolvedName}' 不存在${this.colors.reset}`);
+          console.error(
+            `${this.colors.red}错误: 配置 '${resolvedName}' 不存在${this.colors.reset}`,
+          );
           this.listProfiles();
           return;
         }
@@ -340,7 +363,9 @@ class GlobalPackSync {
           console.error(`${this.colors.red}错误: 没有保存的配置${this.colors.reset}`);
           return;
         }
-        profiles.sort((a, b) => new Date(b[1].savedAt).getTime() - new Date(a[1].savedAt).getTime());
+        profiles.sort(
+          (a, b) => new Date(b[1].savedAt).getTime() - new Date(a[1].savedAt).getTime(),
+        );
         resolvedName = profiles[0][0];
         profile = profiles[0][1];
       }
@@ -351,7 +376,9 @@ class GlobalPackSync {
       }
 
       const { nodeVersion: currentNode, npmVersion: currentNpm } = this.getCurrentVersions();
-      const packageManager = this.resolvePackageManager(options.packageManager ?? profile.packageManager);
+      const packageManager = this.resolvePackageManager(
+        options.packageManager ?? profile.packageManager,
+      );
 
       console.log(`${this.colors.cyan}开始恢复包配置 '${resolvedName}'${this.colors.reset}`);
       console.log(`  原 Node 版本: ${profile.nodeVersion} → 当前: ${currentNode}`);
@@ -420,8 +447,12 @@ class GlobalPackSync {
     profiles.forEach(([name, data], index) => {
       const latest = index === 0 ? ` ${this.colors.green}(最新)${this.colors.reset}` : '';
       console.log(`${this.colors.green}${name}${this.colors.reset}${latest}`);
-      console.log(`  Node: ${data.nodeVersion} | npm: ${data.npmVersion || 'unknown'} | 包管理器: ${data.packageManager || 'npm'}`);
-      console.log(`  包数量: ${data.packagesCount} | 平台: ${data.platform || 'unknown'}-${data.arch || 'unknown'}`);
+      console.log(
+        `  Node: ${data.nodeVersion} | npm: ${data.npmVersion || 'unknown'} | 包管理器: ${data.packageManager || 'npm'}`,
+      );
+      console.log(
+        `  包数量: ${data.packagesCount} | 平台: ${data.platform || 'unknown'}-${data.arch || 'unknown'}`,
+      );
       console.log(`  时间: ${new Date(data.savedAt).toLocaleString()}`);
       console.log('');
     });
@@ -452,7 +483,9 @@ class GlobalPackSync {
 
     const allPackages = new Set([...Object.keys(packages1), ...Object.keys(packages2)]);
 
-    console.log(`${this.colors.cyan}配置差异对比: ${profile1Name} vs ${profile2Name}${this.colors.reset}\n`);
+    console.log(
+      `${this.colors.cyan}配置差异对比: ${profile1Name} vs ${profile2Name}${this.colors.reset}\n`,
+    );
 
     let added = 0;
     let removed = 0;
@@ -642,6 +675,3 @@ ${this.colors.yellow}特性:${this.colors.reset}
 
 export { GlobalPackSync };
 export default GlobalPackSync;
-
-
-

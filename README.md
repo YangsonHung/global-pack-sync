@@ -144,19 +144,19 @@ You can also inspect the generated profile file for a machine-readable view:
 
 ```json
 {
-    "my-project-packages": {
-        "nodeVersion": "v18.17.0",
-        "npmVersion": "9.6.7",
-        "packageManager": "npm",
-        "packages": {
-            "@vue/cli": "5.0.8",
-            "typescript": "5.2.2"
-        },
-        "savedAt": "2025-08-27T10:30:56.789Z",
-        "packagesCount": 15,
-        "platform": "darwin",
-        "arch": "x64"
-    }
+  "my-project-packages": {
+    "nodeVersion": "v18.17.0",
+    "npmVersion": "9.6.7",
+    "packageManager": "npm",
+    "packages": {
+      "@vue/cli": "5.0.8",
+      "typescript": "5.2.2"
+    },
+    "savedAt": "2025-08-27T10:30:56.789Z",
+    "packagesCount": 15,
+    "platform": "darwin",
+    "arch": "x64"
+  }
 }
 ```
 
@@ -279,5 +279,3 @@ See [CHANGELOG.md](./CHANGELOG.md) for the full history.
 If this tool helps you, please leave us a ⭐ star!
 
 **Happy coding!** 🎉
-
-
