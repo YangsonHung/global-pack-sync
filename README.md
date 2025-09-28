@@ -21,27 +21,32 @@ Switching Node.js versions is common, but it brings recurring headaches:
 ## Features
 
 ✨ **Smart version management**
+
 - 🆕 Installs the latest releases by default to avoid security issues.
 - 🔒 Lock to the exact versions captured in a snapshot when required.
 - 📊 See version changes clearly before you apply them.
 
 ⚡ **High-performance installs**
+
 - 🚀 Parallel installation dramatically accelerates migrations.
 - 🎯 Skips packages that already exist globally.
 - 🔄 Generates retry scripts automatically if installs fail.
 
 🛠 **Multi package-manager support**
+
 - 📦 Works with npm, yarn, and pnpm.
 - 🔍 Auto-detects the manager in use.
 - 🔧 Override the manager explicitly when needed.
 
 🎨 **Improved developer experience**
+
 - 🌈 Colorful terminal output with clear progress updates.
 - 📋 Detailed status messages during save and restore operations.
 - 🔍 Interactive selective restore for partial migrations.
 - 📊 Diff saved profiles to compare environments quickly.
 
 🛡 **Safe and stable**
+
 - 🔒 Process lock prevents concurrent runs from clashing.
 - 🚫 Filters out core packages (npm, corepack, global-pack-sync, etc.).
 - 💾 Automatically backs up the configuration file before overwriting.
@@ -139,19 +144,19 @@ You can also inspect the generated profile file for a machine-readable view:
 
 ```json
 {
-  "my-project-packages": {
-    "nodeVersion": "v18.17.0",
-    "npmVersion": "9.6.7",
-    "packageManager": "npm",
-    "packages": {
-      "@vue/cli": "5.0.8",
-      "typescript": "5.2.2"
-    },
-    "savedAt": "2025-08-27T10:30:56.789Z",
-    "packagesCount": 15,
-    "platform": "darwin",
-    "arch": "x64"
-  }
+    "my-project-packages": {
+        "nodeVersion": "v18.17.0",
+        "npmVersion": "9.6.7",
+        "packageManager": "npm",
+        "packages": {
+            "@vue/cli": "5.0.8",
+            "typescript": "5.2.2"
+        },
+        "savedAt": "2025-08-27T10:30:56.789Z",
+        "packagesCount": 15,
+        "platform": "darwin",
+        "arch": "x64"
+    }
 }
 ```
 
@@ -227,18 +232,22 @@ git clone https://github.com/your-username/global-pack-sync.git
 cd global-pack-sync
 
 # Install dependencies
-npm install
+yarn install
 
-# Run locally
-node index.js --help
+# Build once (outputs to dist/)
+yarn build
+
+# Run the CLI locally
+node dist/cli.js --help
 
 # Run tests
-npm test
+yarn test
 ```
 
 ## Changelog
 
 ### v2.0.0 (latest)
+
 - ✨ Added selective restore mode
 - 🆕 Default to latest versions for better security
 - 🚀 Parallel installation boosts performance
@@ -247,6 +256,7 @@ npm test
 - 🔒 Added process locking to prevent conflicts
 
 ### v1.0.0
+
 - 🎉 Initial release
 - 📦 Basic save/restore workflow
 - 💾 JSON-based configuration storage
@@ -269,3 +279,4 @@ See [CHANGELOG.md](./CHANGELOG.md) for the full history.
 If this tool helps you, please leave us a ⭐ star!
 
 **Happy coding!** 🎉
+
