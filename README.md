@@ -1,5 +1,8 @@
 ﻿# npm-migrate
 
+[中文文档](./README.zh.md)
+
+
 CLI utility for backing up and restoring globally installed npm, Yarn, and pnpm packages when switching Node.js versions.
 
 ## Features
@@ -61,3 +64,5 @@ yarn test
 ## License
 
 MIT © 2023-present YangsonHung
+
+
