@@ -19,32 +19,27 @@
 ## 特性
 
 ✨ **智能版本管理**
-
 - 🆕 默认安装最新版本，避免安全漏洞
 - 🔒 支持锁定到保存时的确切版本
 - 📊 版本变更可视化展示
 
 ⚡ **高性能安装**
-
 - 🚀 并行安装，大幅提升迁移速度
 - 🎯 智能跳过已安装的包
 - 🔄 失败包自动生成重试脚本
 
 🛠 **多包管理器支持**
-
 - 📦 npm、yarn、pnpm 全支持
 - 🔍 自动检测当前使用的包管理器
 - 🔧 灵活指定包管理器
 
 🎨 **用户体验优化**
-
 - 🌈 彩色终端输出，清晰易读
 - 📋 详细的进度和状态反馈
 - 🔍 交互式选择性恢复
 - 📊 配置差异对比功能
 
 🛡 **安全稳定**
-
 - 🔒 进程锁防止并发冲突
 - 🚫 自动过滤系统包和工具本身
 - 💾 配置文件自动备份
@@ -117,12 +112,12 @@ global-pack-sync restore --pm yarn --concurrency 5
 
 ### 🎯 选择性恢复
 
-有时您可能不想恢复所有包，可以使用交互式选择：
+如果只想恢复部分工具，可以使用交互式选择：
 
 ```bash
 global-pack-sync select
 
-# 会显示如下界面：
+# 示例交互：
 选择要恢复的包 (配置: node-v18.17.0-1693123456789):
 
 包列表:
@@ -138,77 +133,11 @@ global-pack-sync select
 将安装 3 个包
 ```
 
-### 📊 查看和比较配置
-
-```bash
-# 列出所有保存的配置
-global-pack-sync list
-
-# 比较两个配置的差异
-global-pack-sync diff node-v16.20.0 node-v18.17.0
-
-# 差异对比输出示例：
-配置差异对比: node-v16.20.0 vs node-v18.17.0
-
-+ @vue/cli@5.0.8 (新增)
-- create-react-app@4.0.3 (移除)
-~ typescript: 4.9.5 → 5.2.2 (版本变更)
-
-统计: 新增: 1, 移除: 1, 更新: 3, 相同: 10
-```
-
-### 🗑 删除配置
-
-```bash
-# 删除指定配置
-global-pack-sync delete old-config
-```
-
-## 参数选项
-
-| 参数 | 说明 | 默认值 |
-|------|------|--------|
-| `--pm <manager>` | 指定包管理器 (npm/yarn/pnpm) | 自动检测 |
-| `--concurrency <n>` | 并行安装的包数量 | 3 |
-| `--exact-version` | 使用保存时的确切版本 | false (使用最新版本) |
-
-## 高级用法
-
-### 🔧 团队协作
-
-在团队项目中，可以将配置文件加入版本控制：
-
-```bash
-# 保存团队标准配置
-global-pack-sync save team-standard
-
-# 团队成员切换 Node.js 版本后
-global-pack-sync restore team-standard
-```
-
-### 🚀 CI/CD 集成
-
-```yaml
-# .github/workflows/test.yml
-steps:
-  - name: Setup Node.js
-    uses: actions/setup-node@v3
-    with:
-      node-version: '18'
-
-  - name: Restore global packages
-    run: |
-      npm install -g global-pack-sync
-      global-pack-sync restore ci-packages
-```
-
-### 📝 配置文件管理
-
-配置文件默认保存在 `~/.global-pack-sync/packages.json`：
+也可以直接查看保存的配置文件，了解具体内容：
 
 ```json
 {
-  "node-v18.17.0-1693123456789": {
+  "my-project-packages": {
     "nodeVersion": "v18.17.0",
     "npmVersion": "9.6.7",
     "packageManager": "npm",
@@ -308,7 +237,6 @@ npm test
 ## 更新日志
 
 ### v2.0.0 (最新)
-
 - ✨ 新增选择性恢复功能
 - 🆕 默认使用最新版本策略
 - 🚀 支持并行安装提升性能
@@ -317,7 +245,6 @@ npm test
 - 🔒 增加进程锁防止冲突
 
 ### v1.0.0
-
 - 🎉 初始版本发布
 - 📦 基础的保存和恢复功能
 - 💾 JSON 配置文件存储
