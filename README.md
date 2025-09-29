@@ -229,20 +229,21 @@ yarn test
 
 ## Changelog
 
-### v2.0.0 (latest)
+### v0.0.3 (latest)
 
-- ✨ Added selective restore mode
-- 🆕 Default to latest versions for better security
-- 🚀 Parallel installation boosts performance
-- 📊 Added profile diffing support
-- 🛠 Added yarn/pnpm support
-- 🔒 Added process locking to prevent conflicts
+- `gps` is now available as a short alias for all CLI commands.
+- The `select` command uses an interactive selector with non-TTY fallback.
+- Documentation gained alias and selector control hints in English and Chinese.
 
-### v1.0.0
+### v0.0.2
 
-- 🎉 Initial release
-- 📦 Basic save/restore workflow
-- 💾 JSON-based configuration storage
+- Fixed the published CLI bin path and polished npm badge metadata.
+- Streamlined release scripting and added repository formatting workflows.
+
+### v0.0.1
+
+- Initial release with save/restore commands and profile storage.
+- Added build/test tooling and project documentation.
 
 See [CHANGELOG.md](./CHANGELOG.md) for the full history.
 
