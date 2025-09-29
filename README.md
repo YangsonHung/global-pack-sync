@@ -66,7 +66,6 @@ pnpm add -g global-pack-sync
 
 > Tip: You can also run the CLI with the short alias `gps`.
 
-
 ## Quick Start
 
 ### Typical workflow

@@ -64,7 +64,6 @@ pnpm add -g global-pack-sync
 
 > 提示：所有命令也支持使用简写 `gps`。
 
-
 ## 快速开始
 
 ### 基本工作流程
