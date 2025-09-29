@@ -62,6 +62,9 @@ yarn global add global-pack-sync
 pnpm add -g global-pack-sync
 ```
 
+> 提示：所有命令也支持使用简写 `gps`。
+
+
 ## 快速开始
 
 ### 基本工作流程
@@ -122,21 +125,21 @@ global-pack-sync restore --pm yarn --concurrency 5
 ```bash
 global-pack-sync select
 
-# 示例交互：
-选择要恢复的包 (配置: node-v18.17.0-1693123456789):
+# 提示示例
+使用 ↑/↓ 移动，space 切换选中状态，a 全选/全不选，Enter 确认，q 取消
 
-包列表:
-  1. @vue/cli@5.0.8
-  2. create-react-app@5.0.1
-  3. typescript@5.2.2
-  4. nodemon@3.0.1
-  5. pm2@5.3.0
-
-输入要跳过的包序号 (用空格分隔，直接回车安装全部):
-2 4    # 跳过 create-react-app 和 nodemon
-
-将安装 3 个包
+> [x] @vue/cli@5.0.8
+  [ ] create-react-app@5.0.1
+  [x] typescript@5.2.2
+  [x] nodemon@3.0.1
+  [ ] pm2@5.3.0
 ```
+
+- `↑/↓` 移动光标
+- `space` 切换当前条目的选中状态
+- `a` 在全选与全不选之间切换
+- `Enter` 安装当前选中的包（默认全选）
+- `q` 取消操作，不执行安装
 
 也可以直接查看保存的配置文件，了解具体内容：
 

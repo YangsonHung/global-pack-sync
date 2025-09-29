@@ -64,6 +64,9 @@ yarn global add global-pack-sync
 pnpm add -g global-pack-sync
 ```
 
+> Tip: You can also run the CLI with the short alias `gps`.
+
+
 ## Quick Start
 
 ### Typical workflow
@@ -124,41 +127,21 @@ Need only part of the toolchain? Use the interactive selector:
 ```bash
 global-pack-sync select
 
-# Sample prompt:
-Select packages to restore (profile: node-v18.17.0-1693123456789):
+# Prompt preview
+Use ↑/↓ to move, space to toggle selection, a toggles all, Enter confirms, q cancels.
 
-Package list:
-  1. @vue/cli@5.0.8
-  2. create-react-app@5.0.1
-  3. typescript@5.2.2
-  4. nodemon@3.0.1
-  5. pm2@5.3.0
-
-Enter package numbers to skip (space separated, press Enter to install all):
-2 4    # skip create-react-app and nodemon
-
-Installing 3 packages
+> [x] @vue/cli@5.0.8
+  [ ] create-react-app@5.0.1
+  [x] typescript@5.2.2
+  [x] nodemon@3.0.1
+  [ ] pm2@5.3.0
 ```
 
-You can also inspect the generated profile file for a machine-readable view:
-
-```json
-{
-  "my-project-packages": {
-    "nodeVersion": "v18.17.0",
-    "npmVersion": "9.6.7",
-    "packageManager": "npm",
-    "packages": {
-      "@vue/cli": "5.0.8",
-      "typescript": "5.2.2"
-    },
-    "savedAt": "2025-08-27T10:30:56.789Z",
-    "packagesCount": 15,
-    "platform": "darwin",
-    "arch": "x64"
-  }
-}
-```
+- `↑/↓` move the cursor.
+- `space` toggles the highlighted package.
+- `a` switches between select-all and select-none.
+- `Enter` installs the current selection (everything starts selected).
+- `q` cancels without installing anything.
 
 ## FAQ
 

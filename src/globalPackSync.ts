@@ -1,4 +1,4 @@
-﻿import { execSync } from 'child_process';
+import { execSync } from 'child_process';
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
@@ -198,6 +198,139 @@ class GlobalPackSync {
     });
   }
 
+  private async promptPackageSelection(
+    entries: Array<[string, string]>,
+    profileName: string | null,
+  ): Promise<PackageMap> {
+    const stdin = process.stdin as NodeJS.ReadStream;
+    const stdout = process.stdout;
+
+    if (!stdin.isTTY || !stdout.isTTY) {
+      const allSelected: PackageMap = {};
+      for (const [name, version] of entries) {
+        allSelected[name] = version;
+      }
+      console.log(
+        `${this.colors.yellow}检测到非交互终端，默认选择全部包${this.colors.reset}`,
+      );
+      return allSelected;
+    }
+
+    readline.emitKeypressEvents(stdin);
+    const rl = readline.createInterface({
+      input: stdin,
+      output: stdout,
+      terminal: true,
+    });
+    rl.pause();
+
+    const selected = new Set<number>(entries.map((_, index) => index));
+    let cursor = 0;
+
+    const heading = `${this.colors.cyan}选择要恢复的包${
+      profileName ? ` (配置: ${profileName})` : ''
+    }:${this.colors.reset}`;
+    const hint = `${this.colors.gray}↑/↓ 移动，空格切换选中，a 全选/全不选，Enter 确认，q 或 Ctrl+C 取消${this.colors.reset}`;
+
+    const formatCheckbox = (index: number): string =>
+      selected.has(index)
+        ? `${this.colors.green}[x]${this.colors.reset}`
+        : `${this.colors.gray}[ ]${this.colors.reset}`;
+
+    const render = (): void => {
+      console.clear();
+      console.log(heading);
+      console.log(hint);
+      console.log('');
+      entries.forEach(([name, version], index) => {
+        const pointer = index === cursor ? `${this.colors.blue}>${this.colors.reset}` : ' ';
+        console.log(`${pointer} ${formatCheckbox(index)} ${name}@${version}`);
+      });
+      console.log(
+        `
+${this.colors.yellow}已选择 ${selected.size} / ${entries.length}${this.colors.reset}`,
+      );
+    };
+
+    const canUseRawMode = typeof stdin.setRawMode === 'function';
+    if (canUseRawMode) {
+      stdin.setRawMode(true);
+    }
+    stdin.resume();
+    render();
+
+    return new Promise<PackageMap>((resolve, reject) => {
+      let keypressHandler: ((str: string, key: readline.Key) => void) | null = null;
+
+      const cleanup = () => {
+        if (keypressHandler) {
+          stdin.removeListener('keypress', keypressHandler);
+        }
+        if (canUseRawMode) {
+          stdin.setRawMode(false);
+        }
+        stdin.pause();
+        rl.close();
+        console.clear();
+      };
+
+      const buildSelection = (): PackageMap => {
+        const packages: PackageMap = {};
+        selected.forEach((index) => {
+          const [name, version] = entries[index];
+          packages[name] = version;
+        });
+        return packages;
+      };
+
+      const toggleAll = () => {
+        if (selected.size === entries.length) {
+          selected.clear();
+        } else {
+          entries.forEach((_, index) => selected.add(index));
+        }
+      };
+
+      keypressHandler = (_str, key) => {
+        if (key.name === 'up') {
+          cursor = (cursor + entries.length - 1) % entries.length;
+          render();
+          return;
+        }
+        if (key.name === 'down') {
+          cursor = (cursor + 1) % entries.length;
+          render();
+          return;
+        }
+        if (key.name === 'space') {
+          if (selected.has(cursor)) {
+            selected.delete(cursor);
+          } else {
+            selected.add(cursor);
+          }
+          render();
+          return;
+        }
+        if (key.name === 'a' && !key.ctrl && !key.meta) {
+          toggleAll();
+          render();
+          return;
+        }
+        if (key.name === 'return' || key.name === 'enter') {
+          cleanup();
+          resolve(buildSelection());
+          return;
+        }
+        if (key.name === 'q' || key.name === 'escape' || (key.name === 'c' && key.ctrl)) {
+          cleanup();
+          reject(new Error('已取消选择'));
+        }
+      };
+
+      stdin.on('keypress', keypressHandler);
+    });
+  }
+
   private async installSelectedPackages(
     packages: PackageMap,
     options: CommonOptions = {},
@@ -271,57 +404,34 @@ class GlobalPackSync {
         return;
       }
 
-      const entries = Object.entries(profile.packages);
-      if (entries.length === 0) {
-        console.log(`${this.colors.yellow}配置中没有包${this.colors.reset}`);
-        return;
-      }
-
-      console.log(
-        `${this.colors.cyan}选择要恢复的包 (配置: ${resolvedName}):${this.colors.reset}\n`,
-      );
-      console.log(`${this.colors.yellow}包列表:${this.colors.reset}`);
-      entries.forEach(([name, version], index) => {
-        console.log(`  ${index + 1}. ${name}@${version}`);
-      });
-
-      console.log(
-        `\n${this.colors.cyan}输入要跳过的包序号 (用空格分隔，直接回车安装全部):${this.colors.reset}`,
-      );
-
-      const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
-
-      const answer = await new Promise<string>((resolve) => {
-        rl.question('', (response) => {
-          rl.close();
-          resolve(response);
-        });
-      });
-
-      const skipIndices = answer.trim()
-        ? answer
-            .trim()
-            .split(/\s+/)
-            .map((value) => Number.parseInt(value, 10) - 1)
-            .filter((value) => Number.isInteger(value) && value >= 0)
-        : [];
-
-      const selected: PackageMap = {};
-      entries.forEach(([name, version], index) => {
-        if (!skipIndices.includes(index)) {
-          selected[name] = version;
+        const entries = Object.entries(profile.packages);
+        if (entries.length === 0) {
+          console.log(`${this.colors.yellow}当前配置没有包${this.colors.reset}`);
+          return;
         }
-      });
 
-      console.log(
-        `\n${this.colors.green}将安装 ${Object.keys(selected).length} 个包${this.colors.reset}`,
-      );
+        let selected: PackageMap;
+        try {
+          selected = await this.promptPackageSelection(entries, resolvedName);
+        } catch (error) {
+          const message = error instanceof Error ? error.message : String(error);
+          console.log(`${this.colors.yellow}${message}${this.colors.reset}`);
+          return;
+        }
 
-      if (Object.keys(selected).length > 0) {
-        await this.installSelectedPackages(selected, options);
-      } else {
-        console.log(`${this.colors.yellow}没有选择任何包${this.colors.reset}`);
-      }
+        const selectedCount = Object.keys(selected).length;
+
+        console.log('');
+        console.log(
+          `${this.colors.green}准备安装 ${selectedCount} 个包${this.colors.reset}`,
+        );
+
+        if (selectedCount > 0) {
+          await this.installSelectedPackages(selected, options);
+        } else {
+          console.log(`${this.colors.yellow}没有选择任何包${this.colors.reset}`);
+        }
+
     } finally {
       this.clearLock();
     }
@@ -536,10 +646,11 @@ class GlobalPackSync {
 
   public showHelp(): void {
     console.log(`
-${this.colors.cyan}global-pack-sync - Node.js 全局 npm 包迁移工具 (增强版)${this.colors.reset}
+${this.colors.cyan}global-pack-sync (别名: gps) - Node.js 全局 npm 包迁移工具 (增强版)${this.colors.reset}
 
 ${this.colors.yellow}使用方法:${this.colors.reset}
   global-pack-sync <command> [options]
+  gps <command> [options]
 
 ${this.colors.yellow}命令:${this.colors.reset}
   save [name]           保存当前环境的全局包列表

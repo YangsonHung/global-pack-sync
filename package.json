@@ -1,9 +1,10 @@
 {
   "name": "global-pack-sync",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "CLI utility for syncing global npm/yarn/pnpm packages across Node.js versions.",
   "bin": {
-    "global-pack-sync": "dist/cli.js"
+    "global-pack-sync": "dist/cli.js",
+    "gps": "dist/cli.js"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
