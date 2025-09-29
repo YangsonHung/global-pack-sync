@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.4] - 2025-09-29
+
+### Added
+
+- Added a GitHub Actions workflow that builds, tests, and publishes releases whenever a version tag is pushed.
+- Archived the compiled dist output with every release for direct download.
+
+### Docs
+
+- Documented the automated release process in the English and Chinese READMEs.
+
 ## [0.0.3] - 2025-09-29
 
 ### Added

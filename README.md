@@ -228,7 +228,13 @@ yarn test
 
 ## Changelog
 
-### v0.0.3 (latest)
+### v0.0.4 (latest)
+
+- Added a GitHub Actions workflow that builds, tests, and publishes releases whenever a version tag is pushed.
+- Packaged the compiled `dist/` output with each GitHub release asset.
+- Documented the automated release flow for new contributors.
+
+### v0.0.3
 
 - `gps` is now available as a short alias for all CLI commands.
 - The `select` command uses an interactive selector with non-TTY fallback.
