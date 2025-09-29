@@ -38,21 +38,27 @@ jobs:
         env:
           TAG_NAME: ${{ github.ref_name }}
         run: |
-          VERSION="${TAG_NAME#v}"
-          awk -v ver="$VERSION" '
-            /^## \[/ {
-              if ($0 ~ "^## \[" ver "\]") {
-                capture=1
-              } else if (capture) {
-                exit
-              }
-            }
-            capture { print }
-          ' CHANGELOG.md > release-notes.md
-          if [ ! -s release-notes.md ]; then
-            echo "Could not find changelog entry for version $VERSION" >&2
-            exit 1
-          fi
+          node <<'NODE'
+          const fs = require('fs');
+          const tag = process.env.TAG_NAME || '';
+          const version = tag.startsWith('v') ? tag.slice(1) : tag;
+          if (!version) {
+            throw new Error('Tag name is empty; cannot derive version');
+          }
+          const changelog = fs.readFileSync('CHANGELOG.md', 'utf8');
+          const heading = `## [${version}]`;
+          const start = changelog.indexOf(heading);
+          if (start === -1) {
+            throw new Error(`Could not find changelog entry for version ${version}`);
+          }
+          const after = changelog.slice(start);
+          const nextHeadingIndex = after.indexOf('\n## [', heading.length);
+          const section = after.slice(0, nextHeadingIndex === -1 ? after.length : nextHeadingIndex).trim();
+          if (!section) {
+            throw new Error(`Changelog entry for version ${version} is empty`);
+          }
+          fs.writeFileSync('release-notes.md', section + '\n');
+          NODE
 
       - name: Publish GitHub release
         uses: softprops/action-gh-release@v1
@@ -63,5 +69,3 @@ jobs:
             dist.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-
