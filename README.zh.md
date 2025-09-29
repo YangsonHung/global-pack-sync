@@ -229,7 +229,7 @@ global-pack-sync save
 
 ```bash
 # 克隆仓库
-git clone https://github.com/your-username/global-pack-sync.git
+git clone https://github.com/YangsonHung/global-pack-sync.git
 cd global-pack-sync
 
 # 安装依赖
@@ -271,10 +271,10 @@ yarn test
 
 ## 链接
 
-- 🏠 [项目主页](https://github.com/your-username/global-pack-sync)
-- 🐛 [问题反馈](https://github.com/your-username/global-pack-sync/issues)
-- 📖 [Wiki 文档](https://github.com/your-username/global-pack-sync/wiki)
-- 💬 [讨论区](https://github.com/your-username/global-pack-sync/discussions)
+- 🏠 [项目主页](https://github.com/YangsonHung/global-pack-sync)
+- 🐛 [问题反馈](https://github.com/YangsonHung/global-pack-sync/issues)
+- 📖 [Wiki 文档](https://github.com/YangsonHung/global-pack-sync/wiki)
+- 💬 [讨论区](https://github.com/YangsonHung/global-pack-sync/discussions)
 
 ---
 

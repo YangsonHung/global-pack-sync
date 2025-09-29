@@ -211,7 +211,7 @@ Contributions are welcome! See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelin
 
 ```bash
 # Clone the repo
-git clone https://github.com/your-username/global-pack-sync.git
+git clone https://github.com/YangsonHung/global-pack-sync.git
 cd global-pack-sync
 
 # Install dependencies
@@ -253,10 +253,10 @@ See [CHANGELOG.md](./CHANGELOG.md) for the full history.
 
 ## Links
 
-- 🏠 [Project homepage](https://github.com/your-username/global-pack-sync)
-- 🐛 [Issue tracker](https://github.com/your-username/global-pack-sync/issues)
-- 📖 [Wiki](https://github.com/your-username/global-pack-sync/wiki)
-- 💬 [Discussions](https://github.com/your-username/global-pack-sync/discussions)
+- 🏠 [Project homepage](https://github.com/YangsonHung/global-pack-sync)
+- 🐛 [Issue tracker](https://github.com/YangsonHung/global-pack-sync/issues)
+- 📖 [Wiki](https://github.com/YangsonHung/global-pack-sync/wiki)
+- 💬 [Discussions](https://github.com/YangsonHung/global-pack-sync/discussions)
 
 ---
 
